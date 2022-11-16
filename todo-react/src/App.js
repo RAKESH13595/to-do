@@ -1,11 +1,12 @@
 import './App.css';
-import Header from './components/header/Header'
-import AddToDo from './components/add-todo/AddToDo'
+import React from 'react';
+import Header from './components/header/Header';
+import AddToDo from './components/add-todo/AddToDo';
 import ListToDo from './components/list-todo/ListToDo';
 import {useState} from 'react'
 function App() {
   const [listOfTasks,setListOfTasks] = useState([])
-  const title = "To-Do App"
+  const title = "To-Do List"
   const modifyTask=(operation,taskValue) =>{
     try {
       console.log(listOfTasks,taskValue)
@@ -51,9 +52,11 @@ function App() {
   }
   return (
     <div className="App">
+       <div className="container">
       <Header title={title}></Header>
       <AddToDo modifyTask={modifyTask}></AddToDo>
       <ListToDo listOfTasks={listOfTasks} modifyTask={modifyTask}></ListToDo>
+      </div>
     </div>
   );
 }

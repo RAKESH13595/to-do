@@ -1,4 +1,7 @@
-import {useState} from 'react'
+import React from 'react'
+import {useState} from 'react';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 export default function AddToDo({modifyTask}){
     const [taskValue,setTaskValue] = useState('')
     const [isError,setIsError] = useState(false)
@@ -26,10 +29,12 @@ export default function AddToDo({modifyTask}){
         <div className="form">
             <form onSubmit={(event)=>{formSubmitHandler(event)}}>
                 <div className="form-group">
-                    <input value={taskValue} onChange={(event)=>{handleTaskValChange(event)}}></input>
+                    <h3>Add Todo</h3>
+                    <input placeholder='Add new todo' value={taskValue} onChange={(event)=>{handleTaskValChange(event)}}></input>
                     {isError && <p className="error-message">{errorMessage}</p>}
                 </div>
-                <input disabled={!taskValue} type="submit" className="submit" value="Add Task"></input>
+                <br/>
+                <input disabled={!taskValue} type="submit" className="submit mb-3"  value="Add Task"></input>
             </form>
         </div>
     )
