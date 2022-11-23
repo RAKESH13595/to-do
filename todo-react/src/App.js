@@ -13,7 +13,7 @@ function App() {
       switch (operation) {
         case "add": {
           const isPresent = listOfTasks.find(task=>task.value === taskValue && !task.delete)
-          if (isPresent) {throw "Duplicate task"}
+          if (isPresent) {throw new Error("Duplicate task")}
           const listOfTask = [...listOfTasks]
           listOfTask.push({value: taskValue, delete: false})
           setListOfTasks(listOfTask)
@@ -21,7 +21,7 @@ function App() {
         }
         case "thrash": {
           const index = listOfTasks.findIndex(task=>task.value === taskValue);
-          if (index < 0) { throw "Task not found."}
+          if (index < 0) { throw new Error("Task not found.")}
           const listOfTask = [...listOfTasks]
           listOfTask[index].delete = true
           setListOfTasks(listOfTask)
@@ -29,7 +29,7 @@ function App() {
         }
         case "delete": {
           const index = listOfTasks.findIndex(task=>task.value === taskValue);
-          if (index < 0) { throw "Task not found."}
+          if (index < 0) { throw new Error("Task not found.")}
           const listOfTask = [...listOfTasks]
           listOfTask.splice(index,1)
           setListOfTasks(listOfTask)
@@ -47,12 +47,12 @@ function App() {
     }
     catch(error) {
       console.log("Error: ",error)
-      return {status: 400, error: error}
+      return {status: 400, error: error.message}
     }
   }
   return (
-    <div className="App">
-       <div className="container">
+    <div className="app">
+       <div className="app-container">
       <Header title={title}></Header>
       <AddToDo modifyTask={modifyTask}></AddToDo>
       <ListToDo listOfTasks={listOfTasks} modifyTask={modifyTask}></ListToDo>

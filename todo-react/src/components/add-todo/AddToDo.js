@@ -6,11 +6,9 @@ export default function AddToDo({modifyTask}){
     const [taskValue,setTaskValue] = useState('')
     const [isError,setIsError] = useState(false)
     const [errorMessage,setErrorMessage] = useState("")
-    const formSubmitHandler=(event)=>{
+    const formSubmitHandler=(event,task="add")=>{
         event.preventDefault();
-        console.log("inside formsubmit",event)
-        const resp = modifyTask("add",taskValue)
-        console.log(resp)
+        const resp = modifyTask(task,taskValue)
         if (resp.status === 200) {
             setTaskValue('')
             setIsError(false)
@@ -25,17 +23,25 @@ export default function AddToDo({modifyTask}){
         setErrorMessage("")
         setTaskValue(event.target.value)
     }
+    const handleClearAll=(e)=>{
+        if (window.confirm("Do you want to continue to clear all tasks?")) {
+            formSubmitHandler(e,"clear")
+        }
+    }
     return (
         <div className="form">
-            <form onSubmit={(event)=>{formSubmitHandler(event)}}>
+            <form onSubmit={(e)=>formSubmitHandler(e)}>
                 <div className="form-group">
                     <h3>Add Todo</h3>
-                    <input placeholder='Add new todo' value={taskValue} onChange={(event)=>{handleTaskValChange(event)}}></input>
+                    <input class="to-do-text" type="text" placeholder='Add new todo' value={taskValue} onChange={handleTaskValChange}/>
                     {isError && <p className="error-message">{errorMessage}</p>}
                 </div>
-                <br/>
-                <input disabled={!taskValue} type="submit" className="submit mb-3"  value="Add Task"></input>
+                <div className="form-group">
+                <button disabled={!taskValue} type="submit" className="submit">Add Task</button>
+                <button onClick={(e)=>handleClearAll(e)} className="submit">Clear All</button>
+                </div>
             </form>
+            
         </div>
     )
 }
